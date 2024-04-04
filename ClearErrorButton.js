@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { BleServices }  from './BleServices';
 
 const ClearErrorButton = () => {
     const handlePress = () => {
         console.log('Clearing errors...');
-        // Add button logic here
+        BleServices.writeCharacteristic('0x03')
     };
 
     return (

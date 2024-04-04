@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import  { BleServices }  from './BleServices';
 
-const ConnectionButton = () => {
+const ConnectionButton = ({setIsDeviceConnected}) => {
     const handlePress = () => {
         console.log('Connecting...');
-        // Add button logic here
+        BleServices.connectToDevice('THE BEAST', setIsDeviceConnected);
     };
 
     return (

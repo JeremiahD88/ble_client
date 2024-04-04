@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { BleServices }  from './BleServices';
 
 const IdleButton = () => {
     const handlePress = () => {
         console.log('Idle...');
-        // Add button logic here
+        BleServices.writeCharacteristic('0x00')
     };
 
     return (
