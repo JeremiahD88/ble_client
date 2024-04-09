@@ -1,20 +1,18 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
-import LedStates from './LedStates'; // Adjust the path if necessary
+import LedStates from './LedStates'; 
 import ConnectionButton from './ConnectionButton';
 import IdleButton from './IdleButton';
 import StartButton from './StartButton';
-import ClearErrorButton from './ClearErrorButton';
 import DisconnectButton from './DisconnectButton';
-import TorqueSlider from './TorqueSlider';
 import OdriveInfo from './OdriveInfo';
 import { BleServices } from './BleServices';
 import SpeedSeg from './SpeedSeg';
 import Steering from './Steering';
 
 const App = () => {
-    const [odriveInfo, setOdriveInfo] = useState({color: 'lightgrey', id: '11'}); // Default odriveId
+    const [odriveInfo, setOdriveInfo] = useState({color: 'darkgrey', id: '11'}); // Default odriveId
     const [isDeviceConnected, setIsDeviceConnected] = useState(false);
     const [resetLedColors, setResetLedColors] = useState(false);
     const [odriveSpeed, setOdriveSpeed] = useState(0);
@@ -56,9 +54,6 @@ const App = () => {
             <View style={styles.startButton}>
                 <StartButton />
                 </View>
-            <View style={styles.clearErrorButton}>
-                <ClearErrorButton />
-                </View>
             <View style={styles.joystick}>
                 <Steering 
                     size={100}
@@ -82,7 +77,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'black',
+        backgroundColor: '#103040', //'#104040'
         paddingTop: 30,
     },
     leds: {
@@ -98,12 +93,12 @@ const styles = StyleSheet.create({
     idleButton: {
         position: 'absolute',
         left: 250,
-        top: 400,
+        top: 375,
     },
     startButton: {
         position: 'absolute',
         right: 250,
-        top: 400,
+        top: 375,
     },
     clearErrorButton: {
         position: 'absolute',
@@ -123,13 +118,13 @@ const styles = StyleSheet.create({
     },
     speedSeg: {
         position: 'center',
-        top: 35,
+        top: 15,
     },
     joystick: {
         flex: 1,
         position: 'absolute',
-        left: 85,
-        top: 500,
+        left: 42,
+        top: 465,
     },
 
 });

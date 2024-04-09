@@ -10,21 +10,25 @@ const StartButton = () => {
 
     return (
             <TouchableOpacity style={styles.button} onPress={handlePress}>
-                <Text style={styles.buttonText}>Start</Text>
+                <Text style={styles.buttonText}>Run</Text>
             </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: 'green', 
-        padding: 10,
+        backgroundColor: '#102020', //'#1a600f'
+        padding: 12,
         borderRadius: 10,
         width: 100,
+        borderColor: '#707070', //#707070
+        borderWidth: 0.5,
+        width: 120,
     },
     buttonText: {
-        color: 'white', 
+        color: 'lightgrey', 
         textAlign: 'center',
+        fontFamily: 'monospace',
     },
 });
 

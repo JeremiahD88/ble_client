@@ -21,16 +21,16 @@ const LedStates = ({ ledColor, odriveId, resetLedColors, onLedColorsReset }) => 
                 console.log('Resetting LED colors...');
                 return newLedColors;
             });
-        } else if (odriveId) {
+        } else if (odriveId && !resetLedColors) { // Do not change the colors if resetLedColors is true
             setLedColors(prevLedColors => ({ ...prevLedColors, [odriveId]: ledColor }));
         }
     }, [ledColor, odriveId, resetLedColors]);
 
     useEffect(() => {
-        if (resetLedColors) {
+        if (resetLedColors && Object.values(ledColors).every(color => color === 'darkgrey')) {
             onLedColorsReset();
         }
-    }, [resetLedColors, onLedColorsReset]);
+    }, [ledColors, resetLedColors, onLedColorsReset]);
 
     return (
         <>
@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         margin: 30,
         marginTop: 5,
+        borderWidth: 1,
+        borderColor: 'black',
     },
 });
 

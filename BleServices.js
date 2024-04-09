@@ -3,6 +3,7 @@ import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { BleManager } from 'react-native-ble-plx';
 import { Buffer } from 'buffer';
 import OdriveInfo from './OdriveInfo';
+import { on } from 'events';
 
 const manager = new BleManager();
 
@@ -43,7 +44,7 @@ const requestLocationPermission = async () => {
 let connectedDevice = null; 
 
 export const BleServices = {
-    connectToDevice: async (deviceName, setIsDeviceConnected) => {
+    connectToDevice: async (deviceName, setIsDeviceConnected, onDisconnected) => {
       // Request necessary permissions
       const locationPermissionGranted = await requestLocationPermission();
       const bluetoothPermissionGranted = await requestBluetoothPermission();
@@ -61,16 +62,18 @@ export const BleServices = {
   
             device.connect()
               .then((device) => {
-                console.log(`Connected to ${deviceName}`);
-                connectedDevice = device; // Store the connected device
-                return device.discoverAllServicesAndCharacteristics();
+                  connectedDevice = device; // Store the connected device
+                  return device.discoverAllServicesAndCharacteristics();
               })
               .then((device) => {
-                console.log('Services and characteristics discovered');
-                setIsDeviceConnected(true);
+                  setIsDeviceConnected(true);
+
+                  device.onDisconnected(() => {
+                      onDisconnected();
+                  });
               })
               .catch((error) => {
-                console.log(`Failed to connect to ${deviceName}:`, error);
+                  console.log(`Failed to connect to ${deviceName}:`, error);
               });
           }
         });
@@ -94,13 +97,13 @@ export const BleServices = {
       }
     },
   
-    writeCharacteristic: async (msgID, msgLen, direction, duration1, duration2, speed) => {
+    writeCharacteristic: async (msgID, msgLen, direction, duration1, duration2, speed, angle) => {
         const serviceUUID = '347f1281-56ee-488b-a55a-4afbf234fa8c'; // Replace with your service UUID
         const characteristicUUID = '347f1281-56ee-488b-a55a-4afbf234fa8d'; // Replace with your characteristic UUID
       
         if (connectedDevice) {
           // Create a buffer with the data
-          let buffer = new Uint8Array(6);
+          let buffer = new Uint8Array(7);
           buffer.fill(0); // Clear buffer
           
           buffer[0] = msgID;
@@ -109,7 +112,7 @@ export const BleServices = {
           buffer[3] = duration1; // High byte
           buffer[4] = duration2; // Low byte
           buffer[5] = speed;
-          //buffer[6] = angle; // TODO: Add angle to the buffer
+          buffer[6] = angle; // TODO: Add angle to the buffer
       
           // Convert the buffer to a base64 string
           const data = Buffer.from(buffer).toString('base64');

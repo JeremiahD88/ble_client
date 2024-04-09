@@ -1,16 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const SpeedSeg = ({ speed }) => {
-   return <Text style={styles.speed}>{speed}</Text>
+   return (
+      <View style={styles.background}>
+         <Text style={styles.speed}>{speed}</Text>
+         <Text style={{color: 'red', fontSize: 20, fontFamily: 'Seven Segment'}}>km/h</Text>
+      </View>
+   );
 };
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 260, 
+        height: 180, 
+        borderRadius: 30,
+        borderWidth: 5,
+        borderColor: 'darkgrey', //#707070
+    },
     speed: {
-        fontSize: 80,
-        fontWeight: 'bold',
-        color: 'darkgrey',
-        fontFamily: 'digital 7',
+        fontSize: 130,
+        color: 'red',
+        fontFamily: 'Seven Segment',
     },
 });
 

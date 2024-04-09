@@ -1,25 +1,59 @@
+import errorCodes from './OdriveErrorCodes';
+import { Alert } from 'react-native';
+import { BleServices } from './BleServices';
+
+let alertShown = false; // Add this line
+
 const OdriveInfo = (value) => {
     let odriveId = value[0];
     let odriveCmd = value[1];
     let odriveState = value[6];
-    let odriveError = value[2] + value[3] + value[4] + value[5];
+    let odriveErrorCheck = value[2] + value[3] + value[4] + value[5];
 
-    let odriveInfo = { id: odriveId, speed: 0 }; // Default color
+    let odriveInfo = { id: odriveId, speed: 0}; 
 
     if (odriveCmd === 0x01){
-        if (odriveError !== 0){
-            console.log('Error:', odriveError);
-            odriveInfo.color = 'red'; // Red for error
+        if (odriveErrorCheck !== 0){
+            let errors = Array(4).fill().map((_, i) => value[2 + i] << (i * 8));
+            let errorMessages = '';
+    
+            errors.forEach((error, index) => {
+                if (errorCodes.hasOwnProperty(error)) {
+                    console.log(`Odrive error${index + 1}: ${errorCodes[error]}`);
+                    odriveInfo.color = '#8b0000'; // Red for error
+                    errorMessages += `Error Code: ${error}\nError Message: ${errorCodes[error]}\n\n`;   
+                }
+            });
+    
+            if (!alertShown && errorMessages) { // Move this line outside of the forEach loop
+                Alert.alert(
+                    "Odrive Error",                
+                    `ID: ${odriveInfo.id}\n${errorMessages}`, 
+                    [
+                        { 
+                            text: "Clear Errors", 
+                            onPress: () => {
+                                console.log("OK Pressed");
+                                console.log('Clearing errors...');
+                                BleServices.writeCharacteristic('0x03');
+                                alertShown = false; // Flip the alertShown bool back to false
+                            } 
+                        }
+                    ],
+                    { cancelable: false }
+                );
+                alertShown = true; 
+            }
         }
         else if (odriveState === 1) {
-            //console.log('Odrive is idle');
-            odriveInfo.color = 'blue'; // Blue for idle
+            odriveInfo.color = '#1400a0'; // Blue for idle
         }
         else if (odriveState === 8) {
-            console.log('Odrive is closed loop control');
-            odriveInfo.color = 'green'; // Green for closed loop control
+            odriveInfo.color = '#1a600f'; // Green for closed loop control
         }
-    } else if (odriveCmd === 0x09) {
+    }
+             
+    else if (odriveCmd === 0x09) {
         let buffer = new ArrayBuffer(4);
         let view = new DataView(buffer);
         view.setUint8(0, value[6]);
@@ -32,7 +66,7 @@ const OdriveInfo = (value) => {
         odriveInfo.speed = odriveKmh.toFixed(1);
     }
 
-    return odriveInfo || { color: 'red' }; // Default color
+    return odriveInfo || { color: '#8b0000' }; // Default color
 };
 
 export default OdriveInfo;

@@ -19,13 +19,17 @@ const DisconnectButton = ({ handleDisconnect }) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: 'red', 
+        backgroundColor: '#8b0000', 
         padding: 10,
         borderRadius: 10,
+        borderColor: '#707070', //#707070
+        borderWidth: 0.5,
+        width: 115,
     },
     buttonText: {
-        color: 'white', 
+        color: 'lightgrey', //#dddddd
         textAlign: 'center',
+        fontFamily: 'monospace',
     },
 });
 

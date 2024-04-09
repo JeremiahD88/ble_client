@@ -10,21 +10,24 @@ const IdleButton = () => {
 
     return (
             <TouchableOpacity style={styles.button} onPress={handlePress}>
-                <Text style={styles.buttonText}>Idle</Text>
+                <Text style={styles.buttonText}>Stop</Text>
             </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: 'blue', 
-        padding: 10,
+        backgroundColor: '#101030', //#1400a0
+        padding: 12,
         borderRadius: 10,
-        width: 100,
+        borderColor: '#707070', //'#707070'
+        borderWidth: 0.5,
+        width: 120,
     },
     buttonText: {
-        color: 'white', 
+        color: 'lightgrey', 
         textAlign: 'center',
+        fontFamily: 'monospace',
     },
 });
 

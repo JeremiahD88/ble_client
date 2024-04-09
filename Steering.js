@@ -21,8 +21,8 @@ const Joystick = () => {
         const direction = targetY > currentY ? 1 : -1;
         setCurrentY(prevY => {
           const newY = prevY + direction * 15;
-          sendSteering(newY); // Send the updated steering value
-          console.log('mappedX:', mappedX);
+          sendSteering(newY, mappedX); // Send the updated steering value
+          //console.log('mappedX:', mappedX);
           return newY;
         });
       }
@@ -34,7 +34,6 @@ const Joystick = () => {
   const mapRange = (value, in_min, in_max, out_min, out_max) => {
     return ((value - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
   };
-
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
@@ -51,14 +50,14 @@ const Joystick = () => {
       const distance = Math.sqrt(newX * newX + newY * newY);
 
       // If the distance is greater than the radius, adjust the newX and newY values
-      if (distance > 100) {
-        newX *= 100 / distance;
-        newY *= 100 / distance;
+      if (distance > 150) {
+        newX *= 150 / distance;
+        newY *= 150 / distance;
       }
 
       // Map the X and Y values to the desired ranges
-      const mappedX = Math.round(mapRange(newX, -100, 100, 0, 255));
-      const mappedY = Math.round(mapRange(newY, -100, 100, 255, -255));
+      const mappedX = Math.round(mapRange(newX, -150, 150, 0, 255));
+      const mappedY = Math.round(mapRange(newY, -150, 150, 255, -255));
       setTargetY(mappedY);
       setTargetX(mappedX);
       // Keep the joystick moving in both X and Y directions
@@ -87,18 +86,22 @@ const Joystick = () => {
 
 const styles = StyleSheet.create({
   pad: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: 'darkgrey',
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    backgroundColor: 'darkgrey', //#90b0b0
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'black',
   },
   stick: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
     borderRadius: 25,
-    backgroundColor: 'black',
+    backgroundColor: '#102030',
+    borderColor: 'black',
+    borderWidth: 1,
   },
 });
 
