@@ -12,13 +12,13 @@ const SpeedSeg = ({ speed }) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: 'black',
+        backgroundColor: '#200000',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 260, 
+        width: 230, 
         height: 180, 
         borderRadius: 30,
-        borderWidth: 5,
+        borderWidth: 4,
         borderColor: 'darkgrey', //#707070
     },
     speed: {

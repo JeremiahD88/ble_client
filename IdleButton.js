@@ -17,7 +17,7 @@ const IdleButton = () => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#101030', //#1400a0
+        backgroundColor: '#10105f', //#1400a0
         padding: 12,
         borderRadius: 10,
         borderColor: '#707070', //'#707070'

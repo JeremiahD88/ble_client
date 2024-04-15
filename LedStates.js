@@ -17,6 +17,7 @@ const LedStates = ({ ledColor, odriveId, resetLedColors, onLedColorsReset }) => 
                 for (let key in newLedColors) {
                     newLedColors[key] = 'darkgrey';
                     console.log('Resetting:', key);
+                    console.log('New LED colors:', newLedColors);
                 }
                 console.log('Resetting LED colors...');
                 return newLedColors;

@@ -26,7 +26,7 @@ const Joystick = () => {
           return newY;
         });
       }
-    }, 100);
+    }, 50);
   
     return () => clearInterval(interval);
   }, [currentY, targetY]);
@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkgrey', //#90b0b0
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'black',
   },
   stick: {
     width: 40,
     height: 40,
     borderRadius: 25,
-    backgroundColor: '#102030',
+    backgroundColor: '#000000',
     borderColor: 'black',
     borderWidth: 1,
   },

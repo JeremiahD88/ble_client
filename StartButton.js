@@ -17,7 +17,7 @@ const StartButton = () => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#102020', //'#1a600f'
+        backgroundColor: '#104f20', //'#1a600f' '#104020'
         padding: 12,
         borderRadius: 10,
         width: 100,

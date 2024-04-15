@@ -11,7 +11,7 @@ const ConnectionButton = ({setIsDeviceConnected}) => {
         try {
             await BleServices.connectToDevice('THE BEAST', () => {
                 setIsDeviceConnected(true);
-                setButtonColor('#102020');
+                setButtonColor('#104020');
             }, () => setButtonColor('#8b0000'));
         } catch (error) {
             console.log('Error connecting:', error);
